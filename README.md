@@ -8,6 +8,45 @@
 
 ---
 
+## 在线试用
+
+| 方式 | 地址 | 说明 |
+| --- | --- | --- |
+| **在线（推荐）** | **https://chenjunquan798.github.io/construction-helmet-detection-v1/** | GitHub Pages 托管，浏览器打开即用，无需安装、无需摄像头 |
+| 本地离线 | 双击仓库内 `index.html` | 零依赖，断网可用 |
+
+打开后停在「实时监控」页，选场景与员工点「执行检测」即可看到完整链路；建议桌面端 Chrome / Edge，窗口宽度 ≥ 1200。
+
+## 实际运行截图
+
+以下均为本项目**实际运行页面直接截取**（Edge 无头模式，1680 px 视口，场景 S03 / 批量仿真 500 次），未做拼接或后期修改。
+
+### 完整界面
+
+![完整界面](screenshots/overview.png)
+
+顶部四个标签页，中栏为闸机通道画面，右栏为五条规则的决策链与中文复述，左栏为控制台与阈值。
+
+### 闸机画面：检出盔体裂纹 → 拒绝通行
+
+![闸机画面](screenshots/monitor-scene.png)
+
+场景 S03（盔体裂纹）：四个检测框（安全帽 / 头部 / 人脸 / 下颚带）叠加在画面上，右上角「斜上方相机·盔体裁剪」把盔体放大后标出裂纹，底部横幅给出 `DENY · DENY_DAMAGE 拦截`。
+
+### 五条规则的决策链
+
+![决策链](screenshots/decision-chain.png)
+
+五项顺序校验，第 4 项「盔体完好」未通过（破损概率 0.899 ＞ 阈值 0.50），闸机保持关闭并抓拍推送安保复核。
+
+### 批量仿真：500 次
+
+![批量仿真](screenshots/batch-chart.png)
+
+完整四任务方案放行 52 / 拦截 448 / **漏放 0**；仅检测「有无安全帽」的传统方案放行 347 / 拦截 153 / **漏放 295**。
+
+---
+
 ## 四个核心能力
 
 | 能力 | 实现 |
@@ -63,6 +102,7 @@ assets/app.js                 画面渲染与全部交互
 assets/styles.css             浅色主题样式
 inference/yolov8_service.py   真实 YOLOv8 推理服务（FastAPI + ultralytics）
 inference/requirements.txt
+screenshots/                  README 所用实际运行截图（本机运行页面截取）
 ```
 
 ## 接入真实 YOLOv8
@@ -94,4 +134,4 @@ App.setSource('http://127.0.0.1:8000')
 
 ---
 
-**版本说明**：本仓库为 V1，不含外部图片导入检测功能。支持上传图片并对图片中人物佩戴情况进行检测的第二代见 V2 仓库。
+**版本说明**：本仓库为 V1，不含外部图片导入检测功能。支持上传图片并对图片中人物佩戴情况进行检测的第二代见 [V2 仓库](https://github.com/chenjunquan798/construction-helmet-detection-v2)，在线试用 <https://chenjunquan798.github.io/construction-helmet-detection-v2/>。
